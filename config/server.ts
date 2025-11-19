@@ -1,4 +1,4 @@
-import updateInsurenceValue from "./cron-tasks";
+import cronTasks from "./cron-tasks";
 
 export default ({ env }) => ({
   host: env("HOST", "0.0.0.0"),
@@ -8,7 +8,7 @@ export default ({ env }) => ({
   },
   cron: {
     enabled: true,
-    tasks: updateInsurenceValue,
+    tasks: cronTasks,
   },
   webhooks: {
     populateRelations: env.bool("WEBHOOKS_POPULATE_RELATIONS", false),

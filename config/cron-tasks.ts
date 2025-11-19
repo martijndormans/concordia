@@ -40,4 +40,32 @@ export default {
       rule: "0 0 1 1 *",
     },
   },
+  updateJubileeYears: {
+    task: async ({ strapi }) => {
+      const members = await strapi.db.query("api::member.member").findMany();
+
+      const todayYear = new Date().getUTCFullYear();
+      for (const member of members) {
+        const { DifferentAssociationYears, StartMembership, EndMembership } =
+          member;
+
+        if (EndMembership) {
+          return;
+        }
+
+        const startYear = new Date(StartMembership).getFullYear();
+
+        member.JubileeYears =
+          todayYear - startYear + (Number(DifferentAssociationYears) || 0);
+
+        await strapi.db.query("api::member.member").update({
+          where: { id: member.id },
+          data: member,
+        });
+      }
+    },
+    options: {
+      rule: "20 17 19 11 *",
+    },
+  },
 };

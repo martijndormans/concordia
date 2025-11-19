@@ -80,6 +80,9 @@
     "DifferentAssociationYears": {
       "type": "integer"
     },
+    "JubileeYears": {
+      "type": "integer"
+    },
     "ReEntered": {
       "type": "boolean"
     },
