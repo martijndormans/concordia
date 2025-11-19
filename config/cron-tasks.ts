@@ -37,7 +37,7 @@ export default {
       }
     },
     options: {
-      rule: "0 0 1 1 *",
+      rule: "0 0 0 1 1 *",
     },
   },
   updateJubileeYears: {
@@ -49,23 +49,21 @@ export default {
         const { DifferentAssociationYears, StartMembership, EndMembership } =
           member;
 
-        if (EndMembership !== null || EndMembership !== undefined) {
-          return;
+        if (!EndMembership) {
+          const startYear = StartMembership.split("-", 1)[0];
+
+          member.JubileeYears =
+            todayYear - +startYear + (DifferentAssociationYears || 0);
+
+          await strapi.db.query("api::member.member").update({
+            where: { id: member.id },
+            data: member,
+          });
         }
-
-        const startYear = StartMembership.split("-", 1)[0];
-
-        member.JubileeYears =
-          todayYear - startYear + (Number(DifferentAssociationYears) || 0);
-
-        await strapi.db.query("api::member.member").update({
-          where: { id: member.id },
-          data: member,
-        });
       }
     },
     options: {
-      rule: "50 17 19 11 *",
+      rule: "0 0 20 20 11 *",
     },
   },
 };
