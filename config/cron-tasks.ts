@@ -63,7 +63,7 @@ export default {
       }
     },
     options: {
-      rule: "0 0 20 20 11 *",
+      rule: "0 0 0 1 1 *",
     },
   },
 };
